@@ -1,4 +1,4 @@
-###Javascript Coding Conversions
+## Javascript Coding Conversions
 1. Thụt đầu dòng (Indentation)
   - Code không thụt đầu dòng là không thể đọc, đơn giản là như vậy 
  Có thể thụt đầu dòng bằng space white hoặc tab, tôi thường sử dụng tab
@@ -30,7 +30,7 @@
      * Sau ngoặc nhọn đóng và else hoặc white 
      * Giữa các toán tử, ```vd: if (a == b) {}; var a = 1;```
      
-###Javascript Naming Conversions
+## Javascript Naming Conversions
  1. Đặt tên cho hàm khởi tạo.
   - Trong Javascript không có khái niệm class, chỉ có khái niệm hàm khởi tạo.
    Bạn nên viết hoa các chữ cái đầu tiên của mỗi từ trong tên hàm khởi tạo để phân biệt với hàm thông thường.
