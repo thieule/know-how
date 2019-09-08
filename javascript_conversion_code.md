@@ -32,7 +32,144 @@
         console.log(foo[0], bar[0]); // => 9, 9
         // foo và bar cùng lưu trữ giá trị trên một vùng nhớ, vì vậy khi bar thay đổi, foo cũng thay đổi theo
 ```
-  
+####References
+   - Hằng số (Const)
+   ```gwt javascript
+// bad
+var a = 1;
+var b = 2;
+
+// good
+const a = 1;
+const b = 2;
+//việc định nghĩa hằng số theo từ khoá const sẽ đảm bảo các hằng số không được gán lại giá trị khác.  
+```
+   - Khai báo biến với let
+    Từ ES6 trở đi sẽ thêm vào cách khai báo biến mới let, let khác với var ở scope hoạt động 
+      * const và let chỉ tồn tại giá trị trong phạm vi block code  {}, ra ngoài block này sẽ bị xoá
+      * var sẽ tồn tại xuyên xuốt function chứa nó.
+   - Eslint rule sẽ ngăn bạn sử dụng var [no-var](https://eslint.org/docs/rules/no-var.html), chỉ nên sử dụng let
+#### Objects
+   - Khởi tạo object thông qua {} thay vì new Object(). Eslint: [no-new-object](https://eslint.org/docs/rules/no-new-object.html)
+     ```
+      // bad
+      const item = new Object();
+      
+      // good
+      const item = {};
+      ```
+   - Khai báo các thuộc tính trong 1 khu vực, kể cả thuộc tính động 
+   ``` 
+       function getKey(k) {
+         return `a key named ${k}`;
+       }
+       
+       // bad
+       const obj = {
+         id: 5,
+         name: 'San Francisco',
+       };
+       obj[getKey('enabled')] = true;
+       
+       // good
+       const obj = {
+         id: 5,
+         name: 'San Francisco',
+         [getKey('enabled')]: true,
+       };
+   ```   
+   - Khai báo hàm rút gọn trong object. eslint: [object-shorthand](https://eslint.org/docs/rules/object-shorthand.html)
+   ``` 
+       // bad
+       const atom = {
+         value: 1,
+       
+         addValue: function (value) {
+           return atom.value + value;
+         },
+       };
+       
+       // good
+       const atom = {
+         value: 1,
+       
+         addValue(value) {
+           return atom.value + value;
+         },
+       };
+   ```
+   - Khai báo thuộc tính ngắn gọn
+   ```
+        const lukeSkywalker = 'Luke Skywalker';
+        
+        // bad
+        const obj = {
+          lukeSkywalker: lukeSkywalker,
+        };
+        
+        // good
+        const obj = {
+          lukeSkywalker,
+        };
+   ```
+   - Nhóm các thuộc tính khai báo ngắn lên đầu tiên của Object
+   ``` 
+       const anakinSkywalker = 'Anakin Skywalker';
+       const lukeSkywalker = 'Luke Skywalker';
+       
+       // bad
+       const obj = {
+         episodeOne: 1,
+         twoJediWalkIntoACantina: 2,
+         lukeSkywalker,
+         episodeThree: 3,
+         mayTheFourth: 4,
+         anakinSkywalker,
+       };
+       
+       // good
+       const obj = {
+         lukeSkywalker,
+         anakinSkywalker,
+         episodeOne: 1,
+         twoJediWalkIntoACantina: 2,
+         episodeThree: 3,
+         mayTheFourth: 4,
+       };
+   ```
+   - Chỉ quote các thuộc tính có định danh không hợp lệ. Eslint: [quote-props](https://eslint.org/docs/rules/quote-props.html)
+   ```
+       // bad
+       const bad = {
+         'foo': 3,
+         'bar': 4,
+         'data-blah': 5,
+       };
+       
+       // good
+       const good = {
+         foo: 3,
+         bar: 4,
+         'data-blah': 5,
+       };
+   ```
+   - Không gọi các hàm Object.prototype trực tiếp như các hàm ```hasOwnProperty```, ```propertyIsEnumerable```, và ```isPrototypeOf```. eslint: [no-prototype-builtins](https://eslint.org/docs/rules/no-prototype-builtins)
+        > Vì các hàm này có thể cùng tên với các thuộc tính của object hoặc object này có thể là null (```Object.create(null)```)
+   ```
+       // bad
+       console.log(object.hasOwnProperty(key));
+       
+       // good
+       console.log(Object.prototype.hasOwnProperty.call(object, key));
+       
+       // best
+       const has = Object.prototype.hasOwnProperty; // cache the lookup once, in module scope.
+       console.log(has.call(object, key));
+       /* or */
+       import has from 'has'; // https://www.npmjs.com/package/has
+       console.log(has(object, key));
+   ```
+   
 ## Javascript Coding Conventions
 #### Thụt đầu dòng (Indentation)
   - Code không thụt đầu dòng là không thể đọc, đơn giản là như vậy.  Có thể thụt đầu dòng bằng space white hoặc tab, tôi thường sử dụng tab.
@@ -91,8 +228,8 @@
    - Để phân biệt biến hằng số và biến thông thường thì ta nên đặt tên biến hằng số theo dạng snake_case và in hoa các kí tự.
    ``` 
     // constants example
-    var ERROR_CODE_NOT_FOUND = 403;
-    var ERROR_CODE_NOT_PERMISSION = 401;
+    const ERROR_CODE_NOT_FOUND = 403;
+    const ERROR_CODE_NOT_PERMISSION = 401;
    ```   
   #### Tên hàm hoặc biến private/bublic
    - Biến hoặc hàm private nên sử dụng tiếp đầu ngữ underscore (_)
