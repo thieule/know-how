@@ -298,6 +298,90 @@ const b = 2;
      2,
    ];
    ```
+#### Destructuring
+   > Destructuring là chức năng mới có từ javascript ES6, Giúp truy vấn dữ liệu từ Array hoặc Object và gán chúng vào các biến thông thường. Tuy nhiên, việc "lấy ra dữ liệu" này sẽ chỉ copy mà không làm thay đổi cấu trúc của Object hoặc Array.
+   - Sử dụng Destructuring khi truy cập và sử dụng nhiều thuộc tính của một đối tượng. Eslint: [prefer-destructuring](https://eslint.org/docs/rules/prefer-destructuring)
+   > Tại sao ? Vì sử dụng Destructuring sẽ tiết kiệm bộ nhớ cho việc tạo tham chiếu tạm đến các thuộc tính đó.
+   ```javasctript
+   // bad
+   function getFullName(user) {
+     const firstName = user.firstName;
+     const lastName = user.lastName;
+   
+     return `${firstName} ${lastName}`;
+   }
+   
+   // good
+   function getFullName(user) {
+     const { firstName, lastName } = user;
+     return `${firstName} ${lastName}`;
+   }
+   
+   // best
+   function getFullName({ firstName, lastName }) {
+     return `${firstName} ${lastName}`;
+   }
+   ```
+   - Sử dụng Array Destructuring. Eslint: [prefer-destructuring](https://eslint.org/docs/rules/prefer-destructuring)   
+   ```javascript
+   const arr = [1, 2, 3, 4];
+   
+   // bad
+   const first = arr[0];
+   const second = arr[1];
+   
+   // good
+   const [first, second] = arr;
+   ```
+   - Sử dụng Object Destructuring với nhiều giá trị trả vê. Không sử dụng Array Destructuring.
+   > Tại sao ? Vì bạn có thể thêm thuộc tính mới hoặc thay đổi vị trí mà không làm phát sinh lỗi
+   ```javascript 
+   // bad
+   function processInput(input) {
+     // then a miracle occurs
+     return [left, right, top, bottom];
+   }
+   
+   // the caller needs to think about the order of return data
+   const [left, __, top] = processInput(input);
+   
+   // good
+   function processInput(input) {
+     // then a miracle occurs
+     return { left, right, top, bottom };
+   }
+   
+   // the caller selects only the data they need
+   const { left, top } = processInput(input);
+   ```
+#### Strings
+   - Sự dụng dấu ngoặc đơn ```''``` trong chuỗi. Eslint: [quotes](https://eslint.org/docs/rules/quotes.html)
+   ```javascript
+   // bad
+   const name = "Capt. Janeway";
+   
+   // bad - template literals should contain interpolation or newlines
+   const name = `Capt. Janeway`;
+   
+   // good
+   const name = 'Capt. Janeway';
+   ``` 
+   - Nếu một chuỗi hơn 100 ký tự, không nên viết xuống dòng sử dụng ký tự nối chuỗi
+   ```javascript
+   // bad
+   const errorMessage = 'This is a super long error that was thrown because \
+   of Batman. When you stop to think about how Batman had anything to do \
+   with this, you would get nowhere \
+   fast.';
+   
+   // bad
+   const errorMessage = 'This is a super long error that was thrown because ' +
+     'of Batman. When you stop to think about how Batman had anything to do ' +
+     'with this, you would get nowhere fast.';
+   
+   // good
+   const errorMessage = 'This is a super long error that was thrown because of Batman. When you stop to think about how Batman had anything to do with this, you would get nowhere fast.';
+   ```
 ## Javascript Coding Conventions
 #### Thụt đầu dòng (Indentation)
   - Code không thụt đầu dòng là không thể đọc, đơn giản là như vậy.  Có thể thụt đầu dòng bằng space white hoặc tab, tôi thường sử dụng tab.
