@@ -7,7 +7,7 @@
         * ```null```
         * ```undefined```
         * ```symbol```
-   ```gwt javascript
+   ```javascript
         const foo = 1;
         // Dòng lệnh này khởi tạo vùng nhớ mới cho bar, vùng nhớ này dược lưu trữ giá trị copy từ foo
         let bar = foo;
@@ -21,7 +21,7 @@
         * ```object```
         * ```array```
         * ```function```
-   ```gwt javascript
+   ```avascript
         const foo = [1, 2];
 
         //Dòng lệnh này gán địa chỉ vùng nhớ của foo cho bar 
@@ -32,9 +32,9 @@
         console.log(foo[0], bar[0]); // => 9, 9
         // foo và bar cùng lưu trữ giá trị trên một vùng nhớ, vì vậy khi bar thay đổi, foo cũng thay đổi theo
 ```
-####References
+#### References
    - Hằng số (Const)
-   ```gwt javascript
+   ```javascript
 // bad
 var a = 1;
 var b = 2;
@@ -59,7 +59,7 @@ const b = 2;
       const item = {};
       ```
    - Khai báo các thuộc tính trong 1 khu vực, kể cả thuộc tính động 
-   ``` 
+   ```javascript
        function getKey(k) {
          return `a key named ${k}`;
        }
@@ -79,7 +79,7 @@ const b = 2;
        };
    ```   
    - Khai báo hàm rút gọn trong object. eslint: [object-shorthand](https://eslint.org/docs/rules/object-shorthand.html)
-   ``` 
+   ```javascript
        // bad
        const atom = {
          value: 1,
@@ -99,7 +99,7 @@ const b = 2;
        };
    ```
    - Khai báo thuộc tính ngắn gọn
-   ```
+   ```javascript
         const lukeSkywalker = 'Luke Skywalker';
         
         // bad
@@ -113,7 +113,7 @@ const b = 2;
         };
    ```
    - Nhóm các thuộc tính khai báo ngắn lên đầu tiên của Object
-   ``` 
+   ```javascript
        const anakinSkywalker = 'Anakin Skywalker';
        const lukeSkywalker = 'Luke Skywalker';
        
@@ -231,7 +231,7 @@ const b = 2;
     const ERROR_CODE_NOT_FOUND = 403;
     const ERROR_CODE_NOT_PERMISSION = 401;
    ```   
-  #### Tên hàm hoặc biến private/bublic
+  #### Tên hàm hoặc biến private/public
    - Biến hoặc hàm private nên sử dụng tiếp đầu ngữ underscore (_)
    ```
    var car = {
@@ -276,6 +276,6 @@ const b = 2;
      
      
   Nguồn tham khảo: https://medium.com/@_jmoller/javascript-conventions-and-best-practices-9e980751c70f
-  
+  https://github.com/airbnb/javascript#references
 
 
