@@ -21,7 +21,7 @@
         * ```object```
         * ```array```
         * ```function```
-   ```avascript
+   ```javascript
         const foo = [1, 2];
 
         //Dòng lệnh này gán địa chỉ vùng nhớ của foo cho bar 
@@ -138,7 +138,7 @@ const b = 2;
        };
    ```
    - Chỉ quote các thuộc tính có định danh không hợp lệ. Eslint: [quote-props](https://eslint.org/docs/rules/quote-props.html)
-   ```
+   ```javascript
        // bad
        const bad = {
          'foo': 3,
@@ -155,7 +155,7 @@ const b = 2;
    ```
    - Không gọi các hàm Object.prototype trực tiếp như các hàm ```hasOwnProperty```, ```propertyIsEnumerable```, và ```isPrototypeOf```. eslint: [no-prototype-builtins](https://eslint.org/docs/rules/no-prototype-builtins)
         > Vì các hàm này có thể cùng tên với các thuộc tính của object hoặc object này có thể là null (```Object.create(null)```)
-   ```
+   ```javascript
        // bad
        console.log(object.hasOwnProperty(key));
        
@@ -178,7 +178,7 @@ const b = 2;
 #### Dấu ngoặc nhọn (Curly braces)
   - Hầu hêt các cuốn sách để khuyên bạn nên dùng ngoặc nhọn {} trong các trường hợp sử dụng vòng lặp hoặc trong các khối lệnh if else 
   - Tuy nhiên có 1 vài trường hợp cũng có thể không sử dụng {}. 
-  ```
+  ```javascript
     if (msg != '')  alert(msg);
     else  alert('There is no message to show');
   ```  
@@ -205,19 +205,19 @@ const b = 2;
  #### Đặt tên cho hàm khởi tạo.
   - Trong Javascript không có khái niệm class, chỉ có khái niệm hàm khởi tạo.
    Bạn nên viết hoa các chữ cái đầu tiên của mỗi từ trong tên hàm khởi tạo để phân biệt với hàm thông thường.
-   ```
+   ```javascript
     var car = new Car();
-    functon Car() {};
+    function Car() {};
     
     var accesser = new DataAccesser();
-    function DataAccesser();
+    function DataAccesser() {};
 ```
    >*Cách viết trên được gọi là kiểu PascalCase*
    
   #### Tên hàm thông thường và các biến
   - Trong trường hợp tên biến hoặc tên hàm thông thường (không phải hàm tạo) thì đa số quy ước theo kiểu 
     camelCase
-    ```
+    ```javascript
         // camel case example
         var myAnwesomeFunction = function () {
             var myAnwesomeVariable = 0;  
@@ -226,20 +226,20 @@ const b = 2;
     ```
   #### Tên hằng số 
    - Để phân biệt biến hằng số và biến thông thường thì ta nên đặt tên biến hằng số theo dạng snake_case và in hoa các kí tự.
-   ``` 
+   ```javascript
     // constants example
     const ERROR_CODE_NOT_FOUND = 403;
     const ERROR_CODE_NOT_PERMISSION = 401;
    ```   
   #### Tên hàm hoặc biến private/public
    - Biến hoặc hàm private nên sử dụng tiếp đầu ngữ underscore (_)
-   ```
+   ```javascript
    var car = {
      getBrand: function() {
       return this._getModel() + '' + this._getYear();
      },
-     _getModel: function() { //... },
-     _getYear: function() { //... }
+     _getModel: function() { },
+     _getYear: function() { }
     }
    ```
    - Trong Javascript không có khái niệm hàm private, tất cả đều là public. 
