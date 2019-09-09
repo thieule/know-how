@@ -51,7 +51,7 @@ const b = 2;
    - Eslint rule sẽ ngăn bạn sử dụng var [no-var](https://eslint.org/docs/rules/no-var.html), chỉ nên sử dụng let
 #### Objects
    - Khởi tạo object thông qua {} thay vì new Object(). Eslint: [no-new-object](https://eslint.org/docs/rules/no-new-object.html)
-     ```
+     ```javascript
       // bad
       const item = new Object();
       
@@ -169,7 +169,135 @@ const b = 2;
        import has from 'has'; // https://www.npmjs.com/package/has
        console.log(has(object, key));
    ```
+#### Arrays
+   - Khởi tạo object thông qua [] thay vì new Array(). Eslint: [no-array-constructor](https://eslint.org/docs/rules/no-array-constructor.html)
+   ```javascript
+         // bad
+         const item = new Array();
+         
+         // good
+         const item = [];
+  ```
+   - Thêm một phần tử vào cuối mảng
+   ```javascript
+   const someStack = [];
    
+   // bad
+   someStack[someStack.length] = 'abracadabra';
+   
+   // good
+   someStack.push('abracadabra');
+   ```
+   - Sử dụng ... để copy Array
+   ```javascript
+   // bad
+   const len = items.length;
+   const itemsCopy = [];
+   let i;
+   
+   for (i = 0; i < len; i += 1) {
+     itemsCopy[i] = items[i];
+   }
+   
+   // good
+   const itemsCopy = [...items];
+   ```
+   - Copy một iterable Object to an Array, sử dụng ... thay vì ```Array.from```.
+   ```javascript
+   const foo = document.querySelectorAll('.foo');
+   
+   // good
+   const nodes = Array.from(foo);
+   
+   // best
+   const nodes = [...foo]; 
+   ```
+   - Sử dụng ```Array.from``` để convert từ một array-like object thành một array
+   ```javascript
+   const arrLike = { 0: 'foo', 1: 'bar', 2: 'baz', length: 3 };
+   
+   // bad
+   const arr = Array.prototype.slice.call(arrLike);
+   
+   // good
+   const arr = Array.from(arrLike);
+   ```
+   - Sử dụng return trong định nghĩa các array method callback, eslint: [array-callback-return](https://eslint.org/docs/rules/array-callback-return) 
+   ```javascript
+   // good
+   [1, 2, 3].map((x) => {
+     const y = x + 1;
+     return x * y;
+   });
+   
+   // good
+   [1, 2, 3].map((x) => x + 1);
+   
+   // bad - no returned value means `acc` becomes undefined after the first iteration
+   [[0, 1], [2, 3], [4, 5]].reduce((acc, item, index) => {
+     const flatten = acc.concat(item);
+   });
+   
+   // good
+   [[0, 1], [2, 3], [4, 5]].reduce((acc, item, index) => {
+     const flatten = acc.concat(item);
+     return flatten;
+   });
+   
+   // bad
+   inbox.filter((msg) => {
+     const { subject, author } = msg;
+     if (subject === 'Mockingbird') {
+       return author === 'Harper Lee';
+     } else {
+       return false;
+     }
+   });
+   
+   // good
+   inbox.filter((msg) => {
+     const { subject, author } = msg;
+     if (subject === 'Mockingbird') {
+       return author === 'Harper Lee';
+     }
+   
+     return false;
+   });
+   ```
+   - Xuống dòng sau khi mở và trước khi đóng ngoặc nếu một mảng có nhiều dòng
+   ```javascript
+   // bad
+   const arr = [
+     [0, 1], [2, 3], [4, 5],
+   ];
+   
+   const objectInArray = [{
+     id: 1,
+   }, {
+     id: 2,
+   }];
+   
+   const numberInArray = [
+     1, 2,
+   ];
+   
+   // good
+   const arr = [[0, 1], [2, 3], [4, 5]];
+   
+   const objectInArray = [
+     {
+       id: 1,
+     },
+     {
+       id: 2,
+     },
+   ];
+   
+   const numberInArray = [
+     1,
+     2,
+   ];
+   ```
 ## Javascript Coding Conventions
 #### Thụt đầu dòng (Indentation)
   - Code không thụt đầu dòng là không thể đọc, đơn giản là như vậy.  Có thể thụt đầu dòng bằng space white hoặc tab, tôi thường sử dụng tab.
