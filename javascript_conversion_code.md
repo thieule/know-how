@@ -382,6 +382,203 @@ const b = 2;
    // good
    const errorMessage = 'This is a super long error that was thrown because of Batman. When you stop to think about how Batman had anything to do with this, you would get nowhere fast.';
    ```
+   - Khi build một chuỗi có tham số, hạn chế việc nối chuỗi thay vào đó sử dụng format hoặc template. Eslint [prefer-template](https://eslint.org/docs/rules/prefer-template.html), [template-curly-spacing](https://eslint.org/docs/rules/template-curly-spacing)
+   > Tại sao ? Tạo template khiến chuỗi ngắn gọn và dễ đọc hơn. Việc sử maintain sau này cũng dễ dàng hơn.  
+  ```javascript
+  // bad
+  function sayHi(name) {
+    return 'How are you, ' + name + '?';
+  }
+  
+  // bad
+  function sayHi(name) {
+    return ['How are you, ', name, '?'].join();
+  }
+  
+  // bad
+  function sayHi(name) {
+    return `How are you, ${ name }?`;
+  }
+  
+  // good
+  function sayHi(name) {
+    return `How are you, ${name}?`;
+  }
+  ```
+  - Không bao giờ được sử dụng eval() trong 1 chuỗi, Nó tạo ra nhiều lỗ hỏng bảo mật. eslint: [no-eval](https://eslint.org/docs/rules/no-eval)
+  - Không cần thiết Escape các ký tự trong chuỗi. Eslint: [no-useless-escape](https://eslint.org/docs/rules/no-useless-escape)
+  > Tại sao ?, vì dấu '\\' sẽ khiến chuỗi khó đọc hơn. Chỉ nên sử dụng khi cần thiết.
+  ```javascript
+  // bad
+  const foo = '\'this\' \i\s \"quoted\"';
+  
+  // good
+  const foo = '\'this\' is "quoted"';
+  const foo = `my name is '${name}'`;
+  ``` 
+  - Sử dụng cách định nghĩa hàm theo biểu thức thay vì định nghĩa hàm. Eslint: [func-style](https://eslint.org/docs/rules/func-style)
+  > Tại sao? Tất cả các khai  báo hàm được đưa lên trên cùng, vì thế trong javascript ta có thể gọi hàm trước khi định nghĩa, điều này gây khó đọc và khó mở rộng sau này.
+  Trường hợp một hàm có lượng dòng lớn hoặc phức tạp, bạn nên để ra một file riêng như định nghĩa một module.
+  ```javascript
+  // bad
+  function foo() {
+    // ...
+  }
+  
+  // bad
+  const foo = function () {
+    // ...
+  };
+  
+  // good
+  // lexical name distinguished from the variable-referenced invocation(s)
+  const short = function longUniqueMoreDescriptiveLexicalFoo() {
+    // ...
+  };
+  ```
+  - Đóng gói hàm sử dụng ngay trong một dấu ngoặc (IIFE - immediately-invoked function expression)[wrap-iife](https://eslint.org/docs/rules/wrap-iife.html)
+  > Tại sao ? IIFE là khởi tạo 1 function và thực thi nó ngay lập tức. Vậy tại sao lại dùng IIFE? Bởi vì IIFE như là một các hộp đóng gói code của chính nó. Do đó, những biến trong hộp này là private, bên ngoài(global) không thể truy xuất hay thay đổi được. Và nếu vô tình bạn đặt tên biến giống với global thì cũng không bị ảnh hưởng bên ngoài.
+  IFE hữu ích khi chúng ta muốn đóng gói code để nó không ảnh hưởng đến các biến toàn cục. Nó hữu ích khi chúng ta viết những thư viện. Sau đó, chúng ta nhúng vào những trang web khác nhau thì cũng không ảnh hưởng đến code của chúng ta.
+  ```javascript
+  // immediately-invoked function expression (IIFE)
+  (function () {
+    console.log('Welcome to the Internet. Please follow me.');
+  }());
+```
+- Không khai báo 1 hàm trong 1 non-function block (if, while, etc), trong trường hợp này ta assign hàm như 1 biến. Eslint: [no-loop-func](https://eslint.org/docs/rules/no-loop-func.html)
+```javascript
+// bad
+if (currentUser) {
+  function test() {
+    console.log('Nope.');
+  }
+}
+
+// good
+let test;
+if (currentUser) {
+  test = () => {
+    console.log('Yup.');
+  };
+}
+```
+- Không đặt tên biến tham số arguments. Sẽ bị trùng với biến arguments của hàm, và triệt tiêu biến này.
+```javascript
+// bad
+function foo(name, options, arguments) {
+  // ...
+}
+
+// good
+function foo(name, options, args) {
+  // ...
+}
+```
+Never use arguments, sử dụng cú pháp ... thay thế. [prefer-rest-params](https://eslint.org/docs/rules/prefer-rest-params)
+```javascript
+// bad
+function concatenateAll() {
+  const args = Array.prototype.slice.call(arguments);
+  return args.join('');
+}
+
+// good
+function concatenateAll(...args) {
+  return args.join('');
+}
+```
+- Use cú pháp tham số mặc định của hàm, thay vì gán mặc định trong hàm.
+```javascript
+// really bad
+function handleThings(opts) {
+  // No! We shouldn’t mutate function arguments.
+  // Double bad: if opts is falsy it'll be set to an object which may
+  // be what you want but it can introduce subtle bugs.
+  opts = opts || {};
+  // ...
+}
+
+// still bad
+function handleThings(opts) {
+  if (opts === void 0) {
+    opts = {};
+  }
+  // ...
+}
+
+// good
+function handleThings(opts = {}) {
+  // ...
+}
+```
+- Không sử dụng tham số mặc định có ảnh hưởng phụ không kiểm soát được.
+```javascript
+var b = 1;
+// bad
+function count(a = b++) {
+  console.log(a);
+}
+count();  // 1
+count();  // 2
+count(3); // 3
+count();  // 3
+```
+- Luôn khai báo biến hàm có giá trị mặc định sau cùng.
+```javascript
+// bad
+function handleThings(opts = {}, name) {
+  // ...
+}
+
+// good
+function handleThings(name, opts = {}) {
+  // ...
+}
+```
+- Không sử dụng Function hàm dựng  để tạo mới 1 function. [no-new-func](https://eslint.org/docs/rules/no-new-func)
+> Tại sao? tạo một hàm như này cũng giống như sửa dụng eval() mở ra các lỗ hỏng.
+```javasript
+// bad
+var add = new Function('a', 'b', 'return a + b');
+
+// still bad
+var subtract = Function('a', 'b', 'return a - b');
+```
+- Không thay đổi giá trị hoặc gán lại giá trị của biến tham số của hàm. [no-param-reassign](https://eslint.org/docs/rules/no-param-reassign.html)
+```javascript
+// bad
+function f1(obj) {
+  obj.key = 1;
+}
+
+// good
+function f2(obj) {
+  const key = Object.prototype.hasOwnProperty.call(obj, 'key') ? obj.key : 1;
+}
+```
+```javascript
+// bad
+function f1(a) {
+  a = 1;
+  // ...
+}
+
+function f2(a) {
+  if (!a) { a = 1; }
+  // ...
+}
+
+// good
+function f3(a) {
+  const b = a || 1;
+  // ...
+}
+
+function f4(a = 1) {
+  // ...
+}
+```
+
 ## Javascript Coding Conventions
 #### Thụt đầu dòng (Indentation)
   - Code không thụt đầu dòng là không thể đọc, đơn giản là như vậy.  Có thể thụt đầu dòng bằng space white hoặc tab, tôi thường sử dụng tab.
