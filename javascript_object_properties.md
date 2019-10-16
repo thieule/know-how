@@ -1,5 +1,5 @@
 ## Thuộc tính của object trong javascript (Object properties)
-#### Javascript Properties
+#### Object Properties
   > Properties are the most important part of any JavaScript object.
  - Properties là những giá trị được gán cho 1 đối tượng trong JS
  - Một Object JS là một tập hợp các properties không sắp xếp
@@ -29,3 +29,7 @@ person.nationality = "English";
 var person = {firstName: "Thieu", lastName: "Le", age: 18, eyeColor: "blue"};
 delete person.age;   // or delete person["age"];
 ```
+#### Object Methods
+> Methods là action được thực thi trong đối tượng
+> Methods cũng được lưu trữ như một Object properties
+ - 
