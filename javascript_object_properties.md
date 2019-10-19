@@ -1,4 +1,4 @@
-#### Object Properties
+## Object Properties
   > Properties are the most important part of any JavaScript object.
  - Properties là những giá trị được gán cho 1 đối tượng trong JS
  - Một Object JS là một tập hợp các properties không sắp xếp
@@ -28,7 +28,7 @@ person.nationality = "English";
 var person = {firstName: "Thieu", lastName: "Le", age: 18, eyeColor: "blue"};
 delete person.age;   // or delete person["age"];
 ```
-#### Object Methods
+## Object Methods
 > Methods là action được thực thi trong đối tượng
 > Methods cũng được lưu trữ như một Object properties
  ```javascript
@@ -49,7 +49,7 @@ delete person.age;   // or delete person["age"];
    return this.firstName + " " + this.lastName;
  };
  ```
- #### Object Accessors (Getter and Setters)
+ ## Object Accessors (Getter and Setters)
  > Getters and Setters được giới thiệu từ ES5 (ECMAScript 5 (2009))
  > Get and Set cho phép định nghĩa Object Accessors (Computed Properties)
  - Hầu hết các ngôn ngữ lập trình đều có khái niệm get, set. Các hàm này dùng để thiết lập hoặc truy cập giá trị 1 properties của object.
