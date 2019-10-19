@@ -32,4 +32,123 @@ delete person.age;   // or delete person["age"];
 #### Object Methods
 > Methods là action được thực thi trong đối tượng
 > Methods cũng được lưu trữ như một Object properties
- - 
+ ```javascript
+ var person = {
+   firstName: "Thieu",
+   lastName : "Le",
+   id       : 1,
+   fullName : function() {
+     return this.firstName + " " + this.lastName;
+   }
+ };
+ ```
+ - Gọi hàm follow theo cấu trúc ```objectName.methodName()```
+ - Ví dụ trên có thể gọi hàm bằng cách ```person.fullName();```
+ - Có thể định nghĩa 1 hàm vào object: 
+ ```javascript
+ person.name = function () {
+   return this.firstName + " " + this.lastName;
+ };
+ ```
+ #### Object Accessors (Getter and Setters)
+ > Getters and Setters được giới thiệu từ ES5 (ECMAScript 5 (2009))
+ > Get and Set cho phép định nghĩa Object Accessors (Computed Properties)
+ - Hầu hết các ngôn ngữ lập trình đều có khái niệm get, set. Các hàm này dùng để thiết lập hoặc truy cập giá trị 1 properties của object.
+ - Việc sử dụng get, set nhằm đảm bảo các truy cập properties đều phải thông qua hàm get và thiết lập gía trị phải thông qua hàm set
+ ```javascript
+// Create an object:
+var person = {
+  firstName: "Thieu",
+  lastName : "Le",
+  language : "",
+  get lang() {
+    return this.language;
+  },
+  set lang(lang) {
+      this.language = lang;
+  }
+};
+// Thực hiện hàm set
+person.lang = 'en';
+// thực hiện hàm get 
+const lang = person.lang;
+// giá trị của lang lúc này là 'en'
+``` 
+- Một trong những lợi ích của get, set là bảo mật dữ liệu các thuộc tính. Xem sét ví dụ sau đây :
+```javascript
+// Create an object:
+var person = {
+  firstName: "Thieu",
+  lastName: "Le",
+  t27101986: "en",
+  get lang() {
+    return this.t27101986.toUpperCase();
+  },
+  set lang(value) {
+      this.t27101986 = value;
+  }
+};
+// Thực hiện việc gán giá trị vào thuộc tính t27101987
+// Nhìn bề ngoài sẽ ko biết được thực sự properties tên là gì
+person.lang = 'en';
+// Display data from the object using a getter:
+const lang = person.lang;
+// output lang is EN (upper case value)
+```
+#### Validation with Set 
+- Xem set ví dụ dưới đây: 
+```javascript
+let user = {
+  get name() {
+    return this._name;
+  },
+
+  set name(value) {
+    if (value.length < 4) {
+      alert("Name is too short, need at least 4 characters");
+      return;
+    }
+    this._name = value;
+  }
+};
+
+user.name = "Thieu";
+alert(user.name); // Thieu
+
+user.name = ""; // Alert "Name is too short, need at least 4 characters"
+```
+- Ở ví dụ trên, đã check validate value trước khi set data vào thuộc tính _name. Giúp việc kiểm soát đầu vào các object an toàn hơn. 
+- Đây là có vẻ là 1 ứng dụng khá hữu ích của get/set nhỉ ?
+
+#### Object.defineProperties
+- Ngoài ra, ta cũng có thể định nghĩa get, set thông qua cú pháp ```Object.defineProperties```, 
+- Xem set ví dụ sau: 
+```javascript
+// Define object
+var obj = {counter : 0};
+
+// Define setters
+Object.defineProperty(obj, "reset", {
+  get : function () {this.counter = 0;}
+});
+Object.defineProperty(obj, "increment", {
+  get : function () {this.counter++;}
+});
+Object.defineProperty(obj, "decrement", {
+  get : function () {this.counter--;}
+});
+Object.defineProperty(obj, "add", {
+  set : function (value) {this.counter += value;}
+});
+Object.defineProperty(obj, "subtract", {
+  set : function (value) {this.counter -= value;}
+});
+
+// Play with the counter:
+obj.reset;
+obj.add = 5;
+obj.subtract = 1;
+obj.increment;
+obj.decrement;
+```
+
