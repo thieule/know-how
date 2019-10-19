@@ -4,7 +4,7 @@
     + Booleans, Numbers, String có thể là đối tượng nếu định nghĩa với new từ khóa
     + Dates, Maths, Regular expressions, Arrays, Functions, Objects là đối tượng trong javascript
     + Ngoại trừ biến nguyên thủy (primitives) thì tất cả các giá trị trong javascript đều là 1 đối tượng
- ##### 1. Biến nguyên thủy (Primitives)
+ #### 1. Biến nguyên thủy (Primitives)
    - A primitive là 1 giá trị không có các thuộc tính, không có hàm
    - A primitive data type là dữ liệu có giá trị nguyên thủy
     Javascript định nghĩa 5 loại của kiểu dữ liệu nguyên thủy: 
@@ -16,7 +16,7 @@
    
    Các giá trị nguyên thủy là không thể thay đổi (nó được mã hóa cứng, do đó không thể thay đổi)
    > Ví dụ, nếu khai báo biến x = 3.14, lúc này bạn có thể thay đổi giá trị của X, nhưng không thể thay đổi giá trị 3.14
- ##### 2. Biến đối tượng (Object Variables)    
+ #### 2. Biến đối tượng (Object Variables)    
    - Biến trong javascript có thể chứa 1 giá trị đơn
    ```javascript
 var person = "Thieu Le Quang"
