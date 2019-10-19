@@ -1,4 +1,3 @@
-## Thuộc tính của object trong javascript (Object properties)
 #### Object Properties
   > Properties are the most important part of any JavaScript object.
  - Properties là những giá trị được gán cho 1 đối tượng trong JS
@@ -151,4 +150,8 @@ obj.subtract = 1;
 obj.increment;
 obj.decrement;
 ```
-
+> Tóm lại, Why Using Getters and Setters?
+ - It gives simpler syntax | Cú pháp đơn giản
+ - It allows equal syntax for properties and methods | Cú pháp giống như properties và methods 
+ - It can secure better data quality | Khả năng bảo mật code
+ - It is useful for doing things behind-the-scenes | rất phù hợp phục vụ hậu trường, như validate, hoặc upper case như ví dụ ở trên.
