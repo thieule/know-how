@@ -155,3 +155,5 @@ obj.decrement;
  - It allows equal syntax for properties and methods | Cú pháp giống như properties và methods 
  - It can secure better data quality | Khả năng bảo mật code
  - It is useful for doing things behind-the-scenes | rất phù hợp phục vụ hậu trường, như validate, hoặc upper case như ví dụ ở trên.
+
+> Nội dung tham khảo từ https://www.w3schools.com
