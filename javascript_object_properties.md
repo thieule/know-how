@@ -3,7 +3,7 @@
  - Properties là những giá trị được gán cho 1 đối tượng trong JS
  - Một Object JS là một tập hợp các properties không sắp xếp
  - Properties có thể thường xuyên được thay đổi, thêm mới, và deleted, nhưng cũng có trường hợp readonly
- ##### 1. Truy cập một Javascript Properties
+ #### 1. Truy cập một Javascript Properties
    - Có 3 cách truy cập vào một properties
       * objectName.property, ví dụ : ```person.age```
       * objectName['property'], ví dụ: ```person["age"]```
