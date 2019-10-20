@@ -328,7 +328,7 @@ false
 ```javascript
 console.log(Person.prototype); 
 ```  
-=> Output
+
 ![alt text](img/prototype.png)
 
 
