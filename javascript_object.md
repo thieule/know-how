@@ -239,5 +239,97 @@ obj.decrement;
  - It allows equal syntax for properties and methods | Cú pháp giống như properties và methods 
  - It can secure better data quality | Khả năng bảo mật code
  - It is useful for doing things behind-the-scenes | rất phù hợp phục vụ hậu trường, như validate, hoặc upper case như ví dụ ở trên.
+## Object Constructors
+  - Giống như đã nói ở phần trước, có nhiều cách để định nghĩa hoặc khởi tạo một đối tượng trong Javascript.
+  - Một trong những cách đó là sử dụng hàm dựng. 
+  ```javascript
+function Person(first, last, age, eye) {
+  this.firstName = first;
+  this.lastName = last;
+  this.age = age;
+  this.eyeColor = eye;
+  this.fullName = function () {
+      return this.firstName + ' ' + this.lastName;
+  };
+}
+```
+  - Hàm Person là 1 hàm dựng, sử dụng để khởi tạo mới một hoặc nhiều object. 
+  ```javascript
+var myFather = new Person("Thieu", "Le", 18, "blue");
+var myMother = new Person("Thao", "Vu", 19, "green");
+``` 
+ - Ví dụ trên tạo ra 2 object cùng loại. 
+ - Điều này nói lên ý nghĩa của hàm dựng, tạo ra một khuôn mẫu cho các đối tượng được tạo ra.
+ - Không giống như khái niệm class trong PHP hay Java, đối với JS, bạn hoàn toàn có thể định nghĩa riêng method cho mỗi instance của object.
+ Xem sét ví dụ dưới:
+ ```javascript
+function Person(first, last, age, eye) {
+  this.firstName = first;
+  this.lastName = last;
+  this.age = age;
+  this.eyeColor = eye;
+  this.fullName = function () {
+      return this.firstName + ' ' + this.lastName;
+  };
+}
+var myFather = new Person("Thieu", "Le", 18, "blue");
+var myMother = new Person("Thao", "Vu", 19, "green");
+
+//Define only for myFather object
+myFather.playGame = function()
+{
+  return 'play game';
+};
+//call function in method constructor 
+console.log(myFather.fullName());
+console.log(myMother.fullName());
+
+//call function definition for each object
+console.log(myFather.playGame());
+console.log(myMother.playGame());
+```  
+=> Output : 
+``` 
+    'Thieu Le'
+    'Thao Vu'
+    'play game'
+    error: Uncaught TypeError: myMother.playGame is not a function
+```
+ - Có thể thấy, chỉ các method được định nghĩa trong constructor mới được sử dụng cho những object khởi tạo từ constructor đó. 
+ - Đối với hàm ```playGame``` chỉ được định nghĩa riêng cho myFather object, nên nó bị lỗi nếu gọi từ myMother object.
+## Javascript Prototype
+- Tất cả các đối tượng trong JS đều kế thừa các thuộc tính, hàm từ prototype: 
+    - ```Date``` objects kế thừa từ ```Date.prototype```
+    - ```Array``` objects kế thừa từ ```Array.prototype```
+    - ```Person``` objects kế thừa từ ```Person.prototype```
+- ```Object.prototype``` là object cha cao nhất, ```Date``` objects, ```Array``` objects, and ```Person``` objects đều kế thừa từ ```Object.prototype```.
+- Syntax sử dụng prototype: 
+```javascript
+function Person(first, last, sex) {
+  this.firstName = first;
+  this.lastName = last;
+  this.sex = sex;
+}
+//Định nghĩa một hàm prototype
+Person.prototype.isMan = function () {
+    return this.sex == 'm';
+};
+let myFather = new Person("Thieu", "Le", "m");
+let myMother = new Person("Thao", "Vu", "f");
+console.log(myFather.isMan());
+console.log(myMother.isMan());
+```
+=> Output
+```
+true
+false
+```
+- Có thể xem object prototype của Person bằng cách
+```javascript
+console.log(Person.prototype); 
+```  
+=> Output
+![alt text](img/prototype.png)
+
 
 > Nội dung tham khảo từ https://www.w3schools.com
